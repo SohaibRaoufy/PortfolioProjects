@@ -48,7 +48,7 @@ Where a.PropertyAddress is null
 
 --------------------------------------------------------------------------------------------------
 
---Breaking out Address into Individual Columns (Address, City, State)
+-- Breaking out Address into Individual Columns (Address, City, State)
 
 Select PropertyAddress
 From PortfolioProject.dbo.NashvilleHousing
@@ -133,8 +133,8 @@ SET SoldAsVacant =  CASE When SoldAsVacant = 'Y' THEN 'YES'
 
 --------------------------------------------------------------------------------------------------		
 
-
 -- Remove Duplicates
+	
 
 -- We are Going to USE CTE inorder to create Temporary Table
 WITH RowNumCTE AS(
@@ -164,7 +164,6 @@ Order by PropertyAddress
 
 Select *
 From PortfolioProject .. NashvilleHousing
-
 
 ALTER TABLE PortfolioProject .. NashvilleHousing
 DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress
