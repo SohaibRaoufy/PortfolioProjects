@@ -1,0 +1,123 @@
+---
+title: "Data Cleaning Portfolio Project"
+author: "Sohaib"
+date: "2023-11-30"
+output: html_document
+---
+
+## Introduction
+
+We are going to do some interesting things like clean, standardize, manipulate, and visualize data. We'll go through some common tasks that you'll perform as a data analyst. 
+
+## Cleaning With Basics
+
+We'll start with the basics and learn how to clean up our columns. Let's install the Here, Skimr and Janitor packages now.
+Here: This package makes referencing files easier
+Skimr: package makes summarizing data really easy and let's you skim through it more quickly
+Janitor: The Janitor package has functions for cleaning data.
+
+```{r}
+install.packages("here")
+library("here")
+
+install.packages("skimr")
+library("skimr")
+
+install.packages("janitor")
+library("janitor")
+```
+
+## Installing dplyr package
+
+Dplyr contains a set of functions, that can perform common data manipulation operations, such as: 
+Filtering for rows
+Selecting specific columns
+Re-ordering rows
+Adding new columns
+Summarizing data
+Extracting and summarizing insights from your data
+
+```{r}
+install.packages("dplyr")
+library("dplyr")
+```
+
+
+## Installing palmerpenguin package.
+
+Feel free to import your own dataset. Here we are going to use the palmer penguin package which has lots of information about three penguin species in the Palmer Archipelago, including size measurements, clutch sizes, and blood isotope ratios.
+
+```{r}
+install.packages("palmerpenguins")
+library("palmerpenguins")
+```
+
+## Get Summary
+
+There's a few different functions that we can use to get summaries of our data frame. Skim without charts, glimpse, head, and select. 
+skim_without_charts(): gives us a pretty comprehensive summary of a dataset.
+glimpse(): get a really quick idea of what's in this dataset
+head(): get a preview of the column names and the first few rows of this data set.
+select(): to specify certain columns or to exclude columns we don't need right now.
+
+```{r}
+skim_without_charts(penguins)
+
+glimpse(penguins)
+
+head(penguins)
+
+penguins %>%
+  select(species)
+
+penguins %>%
+  select(-species)
+
+```
+
+## Rename and clean names
+
+Now that we know our column names, we've got a better idea of what we might want to change. 
+
+rename(): The rename function makes it easy to change column names. Starting with the penguin data, we'll type rename and change the name of our island column to island_new.
+
+rename_with(): can change column names to be more consistent. For example, maybe we want all of our column names to be in uppercase.
+
+clean_names(): clean names function in the Janitor package will automatically make sure that the column names are unique and consistent. This ensures that there's only characters, numbers, and underscores in the names. 
+
+```{r}
+penguins %>%
+  rename(island_new=island)
+
+rename_with(penguins, toupper)
+rename_with(penguins, tolower)
+
+clean_names(penguins)
+```
+
+
+## Organizing Data
+
+These functions look a little different in R than in the other tools we've used so far. But the reason we use them is still the same. If we don't organize our data we can't turn information into knowledge. Organizing our data and comparing different metrics from that data helps us find new insights.
+
+arrange():to choose which variable we want to sort by
+group_by(): is usually combined with other functions to sort data. For example, we might want to group by a certain column and then perform an operation on those groups. 
+filter():This lets us narrow down our analysis if we need to
+
+```{r}
+penguins %>%
+  arrange(bill_length_mm)
+
+Penguins_Descending <- penguins %>%
+  arrange(-bill_length_mm)
+print(Penguins_Descending)
+
+penguins %>% group_by(island) %>% drop_na() %>% summarize(mean_bill_length_mm = mean(bill_length_mm))
+
+penguins %>% group_by(island) %>% drop_na() %>% summarize(max_bill_length_mm = max(bill_length_mm))
+
+penguins %>% group_by(species, island) %>% drop_na() %>% summarize(max_bl = max(bill_length_mm), mean_bl = mean(bill_length_mm))
+
+penguins %>% filter(species == "Adelie")
+
+```
